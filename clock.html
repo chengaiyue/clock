@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+<style>
+html {
+	height: 100%;
+}
+body {
+	margin: 0;
+	height: 100%;
+	background: url(images_colck/bg.png) no-repeat center center #000;
+}
+.wrap {
+	width: 520px;
+	height: 520px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -260px 0 0 -260px;
+	text-align: center;
+}
+.title {
+	display: block;
+	margin: 0px auto;
+}
+.wrap img {
+	margin-top: 50px;
+	vertical-align: middle;
+} 
+.time {
+	width: 25px;
+	height: 37px;	
+}
+.week {
+	width: 38px;
+	height: 36px;	
+}
+</style>
+<script src="Mtween/miaov.js"></script>
+<script type="text/javascript">
+
+
+window.onload = function () {
+	var wrap  = document.querySelector('wrap');
+	var img = document.querySelectorAll('.time');
+	var week = document.querySelector('.week');
+	var timer = 0;
+	
+	var n = 0;
+	for ( var i = 0; i < img.length; i++ ) {
+		img[i].nowImg = 0;	
+	};
+	week.nowImg = 1;
+	clock();
+	timer = setInterval(clock,1000);
+	function clock() {
+		var date = new Date();
+		var arrW = ['seven','one','two','three','four','five','six'];
+		
+		var year = date.getFullYear();
+		var month = toDB(date.getMonth() + 1);
+		var date2 = toDB(date.getDate());
+		var hours = toDB(date.getHours());
+		var minutes = toDB(date.getMinutes());
+		var seconds = toDB(date.getSeconds());
+		var day = date.getDay();
+
+		var str = '' + year + month + date2 + hours + minutes + seconds;
+		for ( var i = 0; i < img.length ; i++ ) {
+			//img[i].src = 'images_colck/'+ str[i] +'.png';
+			if ( img[i].nowImg != str[i] ) {
+				img[i].nowImg = str[i];
+				rotate(img[i],'images_colck/'+ str[i] +'.png');	
+			}
+		}
+		if ( week.nowImg != day ) {
+			week.nowImg = day;
+			rotate(week,'images_colck/'+ arrW[day] +'.png');
+		}	
+	}
+	
+	function toDB(n) {
+			return n < 10 ? '0' + n : '' + n ;
+	}
+	
+	function rotate(img,src) {
+		mTween(img,{height: 0},300,'linear',function () {
+			img.src = src;
+			mTween(img,{height: 37},300,'linear');	
+		});	
+	}
+	
+};
+</script>
+<div class="wrap">
+	<img src='images_colck/title.png' class="title">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/year.png'>
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/month.png'>
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/seven.png'>
+	<br/>
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/sign.png'>
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/sign.png'>
+	<img src='images_colck/0.png' class="time">
+	<img src='images_colck/0.png' class="time">
+	<br/>
+	<img src='images_colck/week.png'>
+	<img src='images_colck/one.png' class="week">
+</div>
+<body>
+</body>
+</html>
